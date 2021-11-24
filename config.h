@@ -419,6 +419,9 @@
     #define BUTTON_PIN 6
     #define BUTTON_PRESSED_STATE 0
 
+    #define STARTUP_BLINKS 0
+    #define BOOTLOADER_WAIT 1
+
 #else
     #error "No config for this target"
 #endif
@@ -430,12 +433,15 @@
 	#define BUTTON_INPUT_MODE 	CR_INPUT_PU_PD
 #endif
 
-#define STARTUP_BLINKS 0
+#ifndef STARTUP_BLINKS
+    #define STARTUP_BLINKS 5
+#endif
+
 #ifndef BOOTLOADER_WAIT
 #ifdef BUTTON_BANK
-    #define BOOTLOADER_WAIT 1
+    #define BOOTLOADER_WAIT 6
 #else
-    #define BOOTLOADER_WAIT 1
+    #define BOOTLOADER_WAIT 30
 #endif
 #endif
 

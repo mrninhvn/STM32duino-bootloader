@@ -43,6 +43,7 @@ int main()
     systemReset(); // peripherals but not PC
     setupCLK();
     setupLEDAndButton();
+    setupMatrix();
     setupUSB();
     setupFLASH();
 
@@ -70,7 +71,7 @@ int main()
             {
                 no_user_jump = TRUE;
             }
-            else if (readButtonState())
+            else if (readButtonState() || readMatrixState())
             {
 				no_user_jump = TRUE;
 				#ifdef FASTBOOT

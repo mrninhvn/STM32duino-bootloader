@@ -244,12 +244,14 @@ unsigned int crMask(int pin);
 
 bool readPin(u32 bank, u8 pin);
 bool readButtonState();
+bool readMatrixState();
 void strobePin(u32 bank, u8 pin, u8 count, u32 rate,u8 onState);
 
 void systemHardReset(void);
 void systemReset(void);
 void setupCLK(void);
 void setupLEDAndButton(void);
+void setupMatrix(void);
 void setupFLASH(void);
 bool checkUserCode(u32 usrAddr);
 void jumpToUser(u32 usrAddr);

@@ -408,19 +408,16 @@
 
 #elif defined TARGET_STM32F103_KEY_MATRIX
 
+    // #define DIODE_DIRECTION_ROW2COL
+    #define DIODE_DIRECTION_COL2ROW
     // Row 0
-    #define LED_BANK            GPIOA
-    #define LED_PIN             8
-    #define LED_ON_STATE        1
-
+    #define ROW_BANK            GPIOA
+    #define ROW_PIN             8
     // Col 0
-    #define BUTTON_INPUT_MODE 	CR_INPUT_PU_PD
-    #define BUTTON_BANK GPIOA
-    #define BUTTON_PIN 6
-    #define BUTTON_PRESSED_STATE 0
+    #define COL_BANK GPIOA
+    #define COL_PIN 6
 
-    #define STARTUP_BLINKS 0
-    #define BOOTLOADER_WAIT 1
+    #define BOOTLOADER_WAIT 0
 
 #else
     #error "No config for this target"

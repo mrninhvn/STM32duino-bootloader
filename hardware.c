@@ -73,6 +73,24 @@ bool readButtonState() {
     return state;
 }
 
+bool readMatrixState() {
+    // todo, implement read
+    bool state=FALSE;
+#if defined(DIODE_DIRECTION_COL2ROW) && defined(ROW_BANK) && defined(ROW_PIN)
+    if (GET_REG(GPIO_IDR(ROW_BANK)) & (0x01 << ROW_PIN))
+    {
+        state = TRUE;
+    }
+#endif
+#if defined(DIODE_DIRECTION_ROW2COL) && defined(COL_BANK) && defined(COL_PIN)
+    if (GET_REG(GPIO_IDR(COL_BANK)) & (0x01 << COL_PIN))
+    {
+        state = TRUE;
+    }
+#endif
+    return state;
+}
+
 void strobePin(u32 bank, u8 pin, u8 count, u32 rate,u8 onState)
 {
     gpio_write_bit( bank,pin,1-onState);
@@ -153,7 +171,7 @@ void setupCLK(void) {
 }
 
 
-void setupLEDAndButton (void) {
+void setupLEDAndButton(void) {
     // SET_REG(AFIO_MAPR,(GET_REG(AFIO_MAPR) & ~AFIO_MAPR_SWJ_CFG) | AFIO_MAPR_SWJ_CFG_NO_JTAG_NO_SW);// Try to disable SWD AND JTAG so we can use those pins (not sure if this works).
 
 #if defined(BUTTON_BANK) && defined (BUTTON_PIN) && defined (BUTTON_PRESSED_STATE)
@@ -163,6 +181,30 @@ void setupLEDAndButton (void) {
 #endif
 #if defined(LED_BANK) && defined(LED_PIN) && defined(LED_ON_STATE)
     SET_REG(GPIO_CR(LED_BANK,LED_PIN),(GET_REG(GPIO_CR(LED_BANK,LED_PIN)) & crMask(LED_PIN)) | CR_OUTPUT_PP << CR_SHITF(LED_PIN));
+#endif
+}
+
+void setupMatrix(void)
+{
+#if defined(DIODE_DIRECTION_COL2ROW)
+#if defined(ROW_BANK) && defined(ROW_PIN)
+    SET_REG(GPIO_CR(ROW_BANK,ROW_PIN),(GET_REG(GPIO_CR(ROW_BANK,ROW_PIN)) & crMask(ROW_PIN)) | CR_INPUT_PU_PD << CR_SHITF(ROW_PIN));
+    gpio_write_bit(ROW_BANK, ROW_PIN, 0);// set pulldown.
+#endif
+#if defined(COL_BANK) && defined(COL_PIN)
+    SET_REG(GPIO_CR(COL_BANK,COL_PIN),(GET_REG(GPIO_CR(COL_BANK,COL_PIN)) & crMask(COL_PIN)) | CR_OUTPUT_PP << CR_SHITF(COL_PIN));
+    gpio_write_bit(COL_BANK, COL_PIN, 1);
+#endif
+#endif
+#if defined(DIODE_DIRECTION_ROW2COL)
+#if defined(COL_BANK) && defined(COL_PIN)
+    SET_REG(GPIO_CR(COL_BANK,COL_PIN),(GET_REG(GPIO_CR(COL_BANK,COL_PIN)) & crMask(COL_PIN)) | CR_INPUT_PU_PD << CR_SHITF(COL_PIN));
+    gpio_write_bit(COL_BANK, COL_PIN, 0);// set pulldown.
+#endif
+#if defined(ROW_BANK) && defined(ROW_PIN)
+    SET_REG(GPIO_CR(ROW_BANK,ROW_PIN),(GET_REG(GPIO_CR(ROW_BANK,ROW_PIN)) & crMask(ROW_PIN)) | CR_OUTPUT_PP << CR_SHITF(ROW_PIN));
+    gpio_write_bit(ROW_BANK, ROW_PIN, 1);
+#endif
 #endif
 }
 

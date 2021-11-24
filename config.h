@@ -178,16 +178,6 @@
 
 #elif defined TARGET_GENERIC_F103_NONE
 
-    #define LED_BANK            GPIOA
-    #define LED_PIN             8
-    #define LED_ON_STATE        1
-
-    // Button in matrix
-    #define BUTTON_INPUT_MODE 	CR_INPUT_PU_PD
-    #define BUTTON_BANK GPIOA
-    #define BUTTON_PIN 6
-    #define BUTTON_PRESSED_STATE 0
-
 
 #elif defined TARGET_GENERIC_F103_PG15
 
@@ -416,6 +406,18 @@
     #define LED_PIN             3
     #define LED_ON_STATE        0
 
+#elif defined TARGET_STM32F103_KEY_MATRIX
+
+    // Row 0
+    #define LED_BANK            GPIOA
+    #define LED_PIN             8
+    #define LED_ON_STATE        1
+
+    // Col 0
+    #define BUTTON_INPUT_MODE 	CR_INPUT_PU_PD
+    #define BUTTON_BANK GPIOA
+    #define BUTTON_PIN 6
+    #define BUTTON_PRESSED_STATE 0
 
 #else
     #error "No config for this target"

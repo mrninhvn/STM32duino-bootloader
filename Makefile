@@ -140,6 +140,7 @@ gd32f1-frankenmaple: begin clean gccversion build_gd32f1-frankenmaple sizeafter 
 cc3d: begin clean gccversion build_cc3d sizeafter finished  copy_cc3d end
 generic-pc13-fastboot: begin clean gccversion build_generic-pc13-fastboot sizeafter finished  copy_generic-pc13-fastboot end
 smart-v2: begin clean gccversion build_smart-v2 sizeafter finished  copy_smart-v2 end
+key-matrix: begin clean gccversion build_key-matrix sizeafter finished  copy_key-matrix end
 
 build: elf bin lss sym
 
@@ -449,6 +450,17 @@ copy_smart-v2:
 	@echo "Copying to binaries folder"
 	@echo
 	cp $(TARGET).bin bootloader_only_binaries/smart-v2.bin
+	@echo
+
+build_key-matrix: TARGETFLAGS= -DTARGET_STM32F103_KEY_MATRIX $(DEFINES)
+# Set the linker script
+build_key-matrix: LDFLAGS +=-T$(ST_LIB)/c_only_md_high_density.ld
+build_key-matrix: elf bin lss sym
+copy_key-matrix:
+	@echo
+	@echo "Copying to binaries folder"
+	@echo
+	cp $(TARGET).bin bootloader_only_binaries/key-matrix_bootloader.bin
 	@echo
 
 bin: $(TARGET).bin

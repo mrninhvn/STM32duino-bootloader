@@ -44,17 +44,17 @@ int main()
     setupCLK();
     setupLEDAndButton();
     setupMatrix();
-    setupUSB();
-    setupFLASH();
+    // setupUSB();
+    // setupFLASH();
 
     switch(checkAndClearBootloaderFlag())
     {
-        case 0x01:
-            no_user_jump = TRUE;
-#if defined(LED_BANK) && defined(LED_PIN) && defined(LED_ON_STATE)
-            strobePin(LED_BANK, LED_PIN, STARTUP_BLINKS, BLINK_FAST,LED_ON_STATE);
-#endif
-        break;
+//         case 0x01:
+//             no_user_jump = TRUE;
+// #if defined(LED_BANK) && defined(LED_PIN) && defined(LED_ON_STATE)
+//             strobePin(LED_BANK, LED_PIN, STARTUP_BLINKS, BLINK_FAST,LED_ON_STATE);
+// #endif
+//         break;
         case 0x02:
             dont_wait=TRUE;
         break;
@@ -78,11 +78,18 @@ int main()
 					dont_wait=FALSE;
 				#endif
             }
+            else
+            {
+                dont_wait=TRUE;
+            }
         break;
     }
 
     if (!dont_wait)
     {
+        setupUSB();
+        setupFLASH();
+
         int delay_count = 0;
 
         while ((delay_count++ < BOOTLOADER_WAIT) || no_user_jump)

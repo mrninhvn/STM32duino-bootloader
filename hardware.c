@@ -285,7 +285,7 @@ void bkp10Write(u16 value)
 
 int checkAndClearBootloaderFlag()
 {
-    bool flagSet = 0x00;// Flag not used
+    int flagSet = 0x00;// Flag not used
 
     // Enable clocks for the backup domain registers
     pRCC->APB1ENR |= (RCC_APB1ENR_PWR_CLK | RCC_APB1ENR_BKP_CLK);
@@ -303,11 +303,10 @@ int checkAndClearBootloaderFlag()
     if (flagSet!=0x00)
     {
         bkp10Write(0x0000);// Clear the flag
-        // Disable clocks
-        pRCC->APB1ENR &= ~(RCC_APB1ENR_PWR_CLK | RCC_APB1ENR_BKP_CLK);
     }
 
-
+    // Disable clocks
+    pRCC->APB1ENR &= ~(RCC_APB1ENR_PWR_CLK | RCC_APB1ENR_BKP_CLK);
 
     return flagSet;
 }

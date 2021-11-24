@@ -75,7 +75,6 @@ bool readButtonState() {
 
 bool readMatrixState() {
     // todo, implement read
-    for (volatile int delay = 0; delay < 1000; ++delay) {}
     bool state=FALSE;
 #if defined(DIODE_DIRECTION_COL2ROW) && defined(ROW_BANK) && defined(ROW_PIN)
     if (GET_REG(GPIO_IDR(ROW_BANK)) & (0x01 << ROW_PIN))

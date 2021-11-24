@@ -178,6 +178,16 @@
 
 #elif defined TARGET_GENERIC_F103_NONE
 
+    #define LED_BANK            GPIOA
+    #define LED_PIN             8
+    #define LED_ON_STATE        1
+
+    // Button in matrix
+    #define BUTTON_INPUT_MODE 	CR_INPUT_PU_PD
+    #define BUTTON_BANK GPIOA
+    #define BUTTON_PIN 6
+    #define BUTTON_PRESSED_STATE 0
+
 
 #elif defined TARGET_GENERIC_F103_PG15
 
@@ -418,12 +428,12 @@
 	#define BUTTON_INPUT_MODE 	CR_INPUT_PU_PD
 #endif
 
-#define STARTUP_BLINKS 5
+#define STARTUP_BLINKS 0
 #ifndef BOOTLOADER_WAIT
 #ifdef BUTTON_BANK
-    #define BOOTLOADER_WAIT 6
+    #define BOOTLOADER_WAIT 1
 #else
-    #define BOOTLOADER_WAIT 30
+    #define BOOTLOADER_WAIT 1
 #endif
 #endif
 

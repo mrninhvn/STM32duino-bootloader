@@ -1,5 +1,10 @@
 # STM32duino-bootloader
 
+## Support for keyboard key matrix
+- Config diode direction, row pin & col pin in `config.h` on `TARGET_STM32F103_KEY_MATRIX`.
+- Run `make key-matrix` to build bootloader.
+- Hold switch at (col, row) position when power on to jump into bootloader.
+
 Please Note: This code does not work with all STM32F103 Boards
 
 Also Note: Use GCC 4.8 (not 4.9 or newer, as those versions have more aggressive optimisation which cause hardware registers to be read incorrectly and consequently the bootloader does not work)
